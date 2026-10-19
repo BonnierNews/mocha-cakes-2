@@ -1,8 +1,11 @@
 'use strict';
 
 var Mocha = require('mocha'),
-    Suite = require('mocha/lib/suite'),
-    Test  = require('mocha/lib/test');
+    Test  = Mocha.Test;
+
+// mocha >= 12 ships interfaces/common as an ES module with a named export
+var commonModule = require('mocha/lib/interfaces/common'),
+    createCommon = commonModule.createCommon || commonModule;
 
 Mocha.interfaces['mocha-cakes-2'] = module.exports = mochaCakes;
 
@@ -20,12 +23,12 @@ function mochaCakes(suite) {
   }
 
   suite.on('pre-require', function (context, file, mocha) {
-    var common = require('mocha/lib/interfaces/common')(suites, context, mocha);
+    var common = createCommon(suites, context, mocha);
 
     context.run = mocha.options.delay && common.runWithSuite(suite);
 
-    var wrapperCreator = createWrapper(file, suites, context, mocha);
-    var testTypeCreator = createTestType(file, suites, mocha);
+    var wrapperCreator = createWrapper(file, common);
+    var testTypeCreator = createTestType(file, suites, mocha, common);
 
     context.after = common.after;
     context.afterEach = common.afterEach;
@@ -64,14 +67,14 @@ function mochaCakes(suite) {
  *  Helper functions
  **/
 
-function createTestType(file, suites, mocha) {
+function createTestType(file, suites, mocha, common) {
   return function testTypeCreator(type) {
     function testType(title, fn) {
       var suite, test;
       var testName = type ? type + ' ' + title : title;
 
       suite = suites[0];
-      if (suite.pending) fn = null;
+      if (suite.isPending()) fn = null;
       test = new Test(testName, fn);
       test.file = file;
       suite.addTest(test);
@@ -80,19 +83,18 @@ function createTestType(file, suites, mocha) {
     }
 
     testType.skip = function skip(title) {
-      testType(title);
+      return testType(title);
     };
 
     testType.only = function only(title, fn) {
-      var test = testType(title, fn);
-      mocha.grep(test.fullTitle());
+      return common.test.only(mocha, testType(title, fn));
     };
 
     return testType;
   };
 }
 
-function createWrapper(file, suites, context, mocha) {
+function createWrapper(file, common) {
   return function wrapperCreator(type) {
     function createLabel(title) {
       if (!type) return title;
@@ -101,12 +103,7 @@ function createWrapper(file, suites, context, mocha) {
     }
 
     function wrapper(title, fn) {
-      var suite = Suite.create(suites[0], createLabel(title));
-
-      suite.file = file;
-      suites.unshift(suite);
-      fn.call(suite);
-      suites.shift();
+      var suite = common.suite.create({ title: createLabel(title), file: file, fn: fn });
 
       applyRegisteredHooks(suite, type);
 
@@ -114,17 +111,15 @@ function createWrapper(file, suites, context, mocha) {
     }
 
     wrapper.skip = function skip(title, fn) {
-      var suite = Suite.create(suites[0], createLabel(title));
-
-      suite.pending = true;
-      suites.unshift(suite);
-      fn.call(suite);
-      suites.shift();
+      return common.suite.skip({ title: createLabel(title), file: file, fn: fn });
     };
 
     wrapper.only = function only(title, fn) {
-      var suite = wrapper(title, fn);
-      mocha.grep(suite.fullTitle());
+      var suite = common.suite.only({ title: createLabel(title), file: file, fn: fn });
+
+      applyRegisteredHooks(suite, type);
+
+      return suite;
     };
 
     return wrapper;

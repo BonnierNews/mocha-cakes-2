@@ -1,0 +1,5 @@
+# Configuration for the outer test run only (`npm run test:cli` and
+# `npm run test:watch`). The sample tests are run in child processes with
+# `--no-config`, so they don't read this file. Don't add `spec` here, the spec
+# files are passed on the command line.
+require: ./test/setup.js
