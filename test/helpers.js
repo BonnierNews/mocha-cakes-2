@@ -38,7 +38,7 @@ var interfaces = {
       '--no-package',
       '--require', path.join(__dirname, 'setup.js'),
       '--require', path.join(__dirname, '../mocha-cakes.js'),
-      '--ui', 'mocha-cakes-2',
+      '--ui', '@bonniernews/mocha-cakes-2',
       '--reporter', opts.reporter,
       '--no-color',
       // Be explicit, so a future default of `--forbid-only` in CI doesn't

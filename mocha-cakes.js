@@ -7,7 +7,7 @@ var Mocha = require('mocha'),
 var commonModule = require('mocha/lib/interfaces/common'),
     createCommon = commonModule.createCommon || commonModule;
 
-Mocha.interfaces['mocha-cakes-2'] = module.exports = mochaCakes;
+Mocha.interfaces['@bonniernews/mocha-cakes-2'] = Mocha.interfaces['mocha-cakes-2'] = module.exports = mochaCakes;
 
 function mochaCakes(suite) {
   var suites = [suite];

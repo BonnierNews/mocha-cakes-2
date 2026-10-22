@@ -1,6 +1,6 @@
 {
-  "name": "mocha-cakes-2",
-  "version": "3.3.0",
+  "name": "@bonniernews/mocha-cakes-2",
+  "version": "4.0.0",
   "description": "A Mocha BDD integration",
   "main": "mocha-cakes.js",
   "typings": "./mocha-cakes.d.ts",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iensu/mocha-cakes-2.git"
+    "url": "git+https://github.com/BonnierNews/mocha-cakes-2.git"
   },
   "keywords": [
     "mocha",
@@ -29,7 +29,7 @@
   "author": "Jens Östlund (iensu)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iensu/mocha-cakes-2/issues"
+    "url": "https://github.com/BonnierNews/mocha-cakes-2/issues"
   },
   "engines": {
     "node": ">=22"
@@ -40,7 +40,7 @@
     "LICENSE",
     "README.md"
   ],
-  "homepage": "https://github.com/iensu/mocha-cakes-2#readme",
+  "homepage": "https://github.com/BonnierNews/mocha-cakes-2#readme",
   "peerDependencies": {
     "mocha": ">=11"
   },

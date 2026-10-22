@@ -10,7 +10,7 @@ Mocha Cakes is a [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin)/[C
 NPM:
 
 ```
-npm install --save-dev mocha-cakes-2
+npm install --save-dev @bonniernews/mocha-cakes-2
 ```
 
 ## Requirements
@@ -24,30 +24,30 @@ If you're on an older version of Node.js or Mocha, use `mocha-cakes-2@3.3.0`.
 
 ## Usage
 
-### Enable the mocha-cakes-2 integration
+### Enable the @bonniernews/mocha-cakes-2 integration
 
-To enable the Mocha integration you need to specify `mocha-cakes-2` in the `ui` option.
+To enable the Mocha integration you need to specify `@bonniernews/mocha-cakes-2` in the `ui` option.
 
 #### CLI
 
 Either use the command line argument:
 
 ``` javascript
-mocha --ui mocha-cakes-2 path/to/my/tests
+mocha --ui @bonniernews/mocha-cakes-2 path/to/my/tests
 ```
 
 Or set it in your [Mocha configuration file](https://mochajs.org/running/configuring/), e.g. `.mocharc.json`:
 
 ``` json
 {
-  "ui": "mocha-cakes-2"
+  "ui": "@bonniernews/mocha-cakes-2"
 }
 ```
 
 Or `.mocharc.yml`:
 
 ``` yaml
-ui: mocha-cakes-2
+ui: "@bonniernews/mocha-cakes-2"
 ```
 
 #### API
@@ -60,7 +60,7 @@ var Mocha = require('mocha');
 Mocha = Mocha.default || Mocha;
 
 var mocha = new Mocha({
-  ui: 'mocha-cakes-2'
+  ui: '@bonniernews/mocha-cakes-2'
 });
 ```
 
@@ -68,7 +68,7 @@ Or set it after you've constructed Mocha:
 
 ``` javascript
 var mocha = new Mocha();
-mocha.ui('mocha-cakes-2')
+mocha.ui('@bonniernews/mocha-cakes-2')
 ```
 
 ### Test structure
@@ -106,13 +106,17 @@ The result will look something like this:
 
 The common Mocha functions (`describe`, `it`, `before`, `after`, etc) are also available and can be used together with Mocha Cakes.
 
+### Upgrading from mocha-cakes-2 3.x
+
+Replace the `mocha-cakes-2` dependency with `@bonniernews/mocha-cakes-2` and change the `ui` option to `@bonniernews/mocha-cakes-2`. The old `mocha-cakes-2` ui name still works if the package is loaded with `--require @bonniernews/mocha-cakes-2`.
+
 ### Upgrading from version 1.x
 
-Replace the `require('mocha-cakes-2')` statement(s) with the `--ui mocha-cakes-2` option as described above.
+Replace the `require('mocha-cakes-2')` statement(s) with the `--ui @bonniernews/mocha-cakes-2` option as described above.
 
 ### TypeScript
 
-The TypeScript definitions are bundled together with mocha-cakes-2.
+The TypeScript definitions are bundled together with @bonniernews/mocha-cakes-2.
 To use mocha directly with TypeScript you need types for mocha and [ts-node](https://github.com/TypeStrong/ts-node).
 
 ```
@@ -133,13 +137,13 @@ You should have a `tsconfig.json` in the root of your project like so
 Now you can run it like so:
 
 ```
-mocha -r ts-node/register --ui mocha-cakes-2  ...
+mocha -r ts-node/register --ui @bonniernews/mocha-cakes-2  ...
 ```
 
 Your tests should look like this:
 
 ```
-import 'mocha-cakes-2';
+import '@bonniernews/mocha-cakes-2';
 
 Feature('Some feature', () => {
 
