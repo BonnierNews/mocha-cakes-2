@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+permissions: { contents: read }
+jobs:
+  test:
+    name: Node ${{ matrix.node }} / mocha ${{ matrix.mocha }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: { node: [22, 24, 26], mocha: [11, 12] }
+    steps:
+      - uses: actions/checkout@v7
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@v7
+        with: { node-version: "${{ matrix.node }}" }   # no cache: no lockfile
+      - run: npm install --no-audit --no-fund
+      - name: Install mocha ${{ matrix.mocha }}
+        run: npm install --no-save --no-audit --no-fund mocha@${{ matrix.mocha }}
+      - name: Verify versions
+        env: { MOCHA_MAJOR: "${{ matrix.mocha }}" }
+        run: |
+          node --version && npm --version && npx mocha --version
+          node -e "const v=require('mocha/package.json').version;if(v.split('.')[0]!==process.env.MOCHA_MAJOR){console.error('Expected mocha '+process.env.MOCHA_MAJOR+'.x, got '+v);process.exit(1)}console.log('Using mocha '+v)"
+      - run: npm run test:cli
+      - run: npm run test:api

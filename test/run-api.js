@@ -1,6 +1,6 @@
 'use strict';
 
-var Mocha = require('mocha');
+var Mocha = require('mocha'); Mocha = Mocha.default || Mocha;
 var chai = require('chai');
 
 require('../mocha-cakes');
