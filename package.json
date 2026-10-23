@@ -32,7 +32,7 @@
     "url": "https://github.com/BonnierNews/mocha-cakes-2/issues"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12"
   },
   "files": [
     "mocha-cakes.js",

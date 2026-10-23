@@ -15,7 +15,7 @@ npm install --save-dev @bonniernews/mocha-cakes-2
 
 ## Requirements
 
-* Node.js 22 or later
+* Node.js 22.12 or later
 * Mocha 11 or 12 (`mocha` is a peer dependency: `mocha >= 11`)
 
 Mocha Cakes 2 is tested on Node.js 22, 24 and 26 with Mocha 11 and 12.
